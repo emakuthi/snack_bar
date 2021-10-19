@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
       label: 'Undo',
     ),
   );
+  String delete = 'No Choice Made';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +46,44 @@ class _MainPageState extends State<MainPage> {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: const Text('Save'),
-            )
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.red),
+              onPressed: () {
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              delete = 'you selected yes';
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Yes'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              delete = 'you selected No';
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: const Text('No'),
+                        )
+                      ],
+                      title: const Text('Deleting'),
+                      content: const Text('Are you sure you want to delete?'),
+                    );
+                  },
+                );
+              },
+              child: const Text('Delete'),
+            ),
+            Text(delete)
           ],
         ),
       ),
